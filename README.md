@@ -1,9 +1,12 @@
-# mht_quantum
+# Quantum algorithms for MHT
 
-Research code for benchmarking quantum-inspired and classical solvers on:
+Research code for benchmarking quantum and classical solvers for MHT problems. The repository also contains the code for 
+solving other problems like 8-SAT. More specifically we can solve the following problems:
 
 - random 8-SAT instances (QAOA vs WalkSAT variants),
-- graph-based DAP-style formulations (MWIS/MWC as WCNF/QUBO/Ising).
+- graph-based DAP-style formulations (MWIS/MWC).
+- Max-2-SAT (WCNF) instances based on the DAP-style graph formulations.
+- encodings necessary for the use of quantum algorithms (QUBO/Ising).
 
 ## Setup
 
@@ -17,12 +20,10 @@ pip install -r requirements.txt
 
 ### Root files
 
-| File | Purpose |
-|---|---|
-| `README.md` | Project overview and file-by-file map. |
-| `requirements.txt` | Python dependencies (NumPy/SciPy, plotting, `numba`, `networkx`, `python-sat`, Jupyter). |
-| `test_dap.ipynb` | Notebook that runs the DAP flow end-to-end: generate graph instance, convert to WCNF, solve via exact RC2 and custom WalkSAT, then build QUBO. |
-| `.DS_Store` | macOS Finder metadata file (not part of project logic). |
+| File | Purpose                                                                                                                                                  |
+|---|----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `requirements.txt` | Python dependencies (NumPy/SciPy, plotting, `numba`, `networkx`, `python-sat`, Jupyter).                                                                 |
+| `test_dap.ipynb` | Notebook that runs the DAP flow end-to-end: generate graph instance, convert to WCNF, solve via exact RC2 and custom WalkSAT, then build QUBO (for now). |
 
 ### `src/ksat/` (8-SAT pipeline)
 
@@ -36,30 +37,20 @@ pip install -r requirements.txt
 
 ### `src/mht/` (DAP / graph optimization helpers)
 
-| File | Purpose |
-|---|---|
-| `src/mht/generate_dap.py` | Graph instance generation plus transformations: graph -> WCNF (Max-2-SAT), graph -> QUBO, and QUBO -> Ising/diagonal Hamiltonian. |
-| `src/mht/classical_solvers_dap.py` | Classical solving backends for WCNF: exact RC2 wrapper and a weighted WalkSAT-style heuristic kernel. |
-| `src/mht/qaoa_mht.py` | QAOA helper module for MHT/DAP workflows, including unified LR-QAOA training in supervised and unsupervised modes. |
+| File | Purpose                                                                                                                                  |
+|---|------------------------------------------------------------------------------------------------------------------------------------------|
+| `src/mht/generate_dap.py` | Graph instance generation plus transformations (e.g., graph -> WCNF (Max-2-SAT), graph -> QUBO, and QUBO -> Ising/diagonal Hamiltonian). |
+| `src/mht/classical_solvers_dap.py` | Classical solving backends.                                                                                                              |
+| `src/mht/qaoa_mht.py` | QAOA helper module for MHT/DAP workflows, including unified LR-QAOA training in supervised and unsupervised modes.                       |
 
 ### `ksat_implementation/` (experiment scripts/notebooks)
 
-| File | Purpose |
-|---|---|
+| File | Purpose                                                                                                              |
+|---|----------------------------------------------------------------------------------------------------------------------|
 | `ksat_implementation/main_benchmark_8sat.py` | Script version of the 8-SAT benchmark workflow (data generation, solver benchmarking, scaling estimation, plotting). |
-| `ksat_implementation/main_benchmark_testbed_8sat.ipynb` | Notebook testbed for running the modular `src/ksat/*` benchmarking pipeline interactively. |
-| `ksat_implementation/Final  LR QAOA vs QAOA vs walksat.ipynb` | Monolithic final experiment notebook containing full benchmark functions inline and producing comparative scaling plots. |
+| `ksat_implementation/main_benchmark_testbed_8sat.ipynb` | Notebook testbed for running the modular `src/ksat/*` benchmarking pipeline interactively.                           |
+| `ksat_implementation/Final  LR QAOA vs QAOA vs walksat.ipynb` | Final experiment notebook containing full benchmark functions inline and producing comparative scaling plots.        |
 
-### `.idea/` (PyCharm project metadata)
-
-| File | Purpose |
-|---|---|
-| `.idea/.gitignore` | PyCharm-specific ignore patterns for workspace-local files. |
-| `.idea/misc.xml` | IDE project SDK/interpreter settings. |
-| `.idea/modules.xml` | PyCharm module registration. |
-| `.idea/mht_quantum.iml` | Module configuration (`.venv` exclusion, SDK binding). |
-| `.idea/inspectionProfiles/Project_Default.xml` | Inspection/lint profile settings used by PyCharm. |
-| `.idea/inspectionProfiles/profiles_settings.xml` | Inspection profile selection settings. |
 
 ## Typical Workflows
 
